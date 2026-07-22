@@ -16,4 +16,5 @@ def test_package_imports() -> None:
 
 def test_version_is_pep440_compatible() -> None:
     """__version__ is present and parseable as a simple release version."""
-    assert re.fullmatch(r"\d+\.\d+\.\d+(?:[.-]?(?:a|b|rc|dev)\d+)?", geoai3d.__version__)
+    pattern = r"\d+\.\d+\.\d+(?:[.-]?(?:a|b|rc|dev)\d+)?"
+    assert re.fullmatch(pattern, geoai3d.__version__)
