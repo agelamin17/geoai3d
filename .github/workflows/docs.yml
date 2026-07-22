@@ -1,8 +1,9 @@
 name: Docs
 
+# Manual-only until Stage 2, when the documentation site has real content and
+# GitHub Pages is enabled (Settings -> Pages -> Source: GitHub Actions). Re-add
+# the push trigger then. Run on demand from the Actions tab in the meantime.
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
 
 permissions:
