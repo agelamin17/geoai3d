@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Question or discussion
+    url: https://github.com/agelamin17/geoai3d/discussions
+    about: Ask usage questions or discuss direction here rather than in issues.
+  - name: Security vulnerability
+    url: https://github.com/agelamin17/geoai3d/security/advisories/new
+    about: Report privately. Please do not open a public issue.

@@ -1,0 +1,39 @@
+name: Feature request
+description: Suggest a capability
+labels: ["enhancement", "triage"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: The problem
+      description: >-
+        Describe the workflow you are trying to complete and where it currently
+        breaks down. Focus on the problem rather than a proposed API.
+    validations:
+      required: true
+  - type: textarea
+    id: current
+    attributes:
+      label: How you handle it today
+      description: Which tools, and what makes that unsatisfactory.
+  - type: dropdown
+    id: domain
+    attributes:
+      label: Application domain
+      options:
+        - Airborne Lidar / topographic mapping
+        - Terrestrial or mobile laser scanning
+        - UAV photogrammetry
+        - Forestry
+        - Surveying / engineering
+        - Bathymetry
+        - Geomorphology / change detection
+        - Cultural heritage
+        - Other
+  - type: textarea
+    id: licensing
+    attributes:
+      label: Relevant prior art
+      description: >-
+        Papers or open-source implementations. Please note the licence of anything
+        you link, so we can check compatibility with an MIT core early.

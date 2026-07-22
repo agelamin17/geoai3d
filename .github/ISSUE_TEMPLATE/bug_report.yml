@@ -1,0 +1,45 @@
+name: Bug report
+description: Something does not work as documented
+labels: ["bug", "triage"]
+body:
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: What you expected, and what occurred instead.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Minimal reproducible example
+      description: The smallest code that shows the problem.
+      render: python
+    validations:
+      required: true
+  - type: textarea
+    id: traceback
+    attributes:
+      label: Full traceback
+      render: shell
+  - type: input
+    id: version
+    attributes:
+      label: geoai3d version
+      description: "Output of: python -c \"import geoai3d; print(geoai3d.__version__)\""
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: OS, Python version, and install method
+      placeholder: "macOS 15.2, Python 3.12, pip install geoai3d"
+    validations:
+      required: true
+  - type: textarea
+    id: data
+    attributes:
+      label: Data characteristics
+      description: >-
+        If the problem involves a point cloud: format, approximate point count,
+        horizontal and vertical CRS. Do not upload large or sensitive files.

@@ -1,0 +1,29 @@
+cff-version: 1.2.0
+title: "GEOAI_3D: geospatial-first AI workflows for 3D data"
+message: "If you use this software, please cite it using these metadata."
+type: software
+authors:
+  - given-names: Ahmed
+    family-names: Elamin
+    email: agelamin@outlook.com
+    # orcid: "https://orcid.org/0000-0000-0000-0000"
+repository-code: "https://github.com/agelamin17/geoai3d"
+url: "https://github.com/agelamin17/geoai3d"
+abstract: >-
+  GEOAI_3D provides high-level, geospatial-first AI workflows for
+  three-dimensional data, including Lidar point clouds, photogrammetric
+  reconstruction, and Gaussian splatting. Coordinate reference systems,
+  vertical datums, uncertainty, and provenance are treated as first-class
+  properties of the data rather than optional metadata.
+keywords:
+  - lidar
+  - point cloud
+  - geospatial
+  - remote sensing
+  - photogrammetry
+  - geomatics
+  - Gaussian splatting
+  - deep learning
+license: MIT
+version: 0.0.1
+date-released: "2026-07-21"

@@ -1,0 +1,114 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "geoai3d"
+dynamic = ["version"]
+description = "Geospatial-first AI workflows for 3D data: Lidar point clouds, photogrammetry, and Gaussian splatting."
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+requires-python = ">=3.10"
+authors = [{ name = "Ahmed Elamin", email = "agelamin@outlook.com" }]
+maintainers = [{ name = "Ahmed Elamin", email = "agelamin@outlook.com" }]
+keywords = [
+    "lidar", "point-cloud", "geospatial", "gis", "remote-sensing",
+    "photogrammetry", "gaussian-splatting", "deep-learning", "geomatics",
+]
+classifiers = [
+    "Development Status :: 2 - Pre-Alpha",
+    "Intended Audience :: Science/Research",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering :: GIS",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Typing :: Typed",
+]
+
+# Base install must succeed on a CPU-only machine with no compiler.
+# Anything needing CUDA or a build toolchain belongs in an optional extra.
+dependencies = []
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "pytest-cov>=5.0",
+    "ruff>=0.6",
+    "mypy>=1.11",
+    "pre-commit>=3.8",
+]
+docs = [
+    "mkdocs>=1.6",
+    "mkdocs-material>=9.5",
+    "mkdocstrings[python]>=0.26",
+]
+
+[project.urls]
+Homepage = "https://github.com/agelamin17/geoai3d"
+Documentation = "https://agelamin17.github.io/geoai3d/"
+Repository = "https://github.com/agelamin17/geoai3d"
+Issues = "https://github.com/agelamin17/geoai3d/issues"
+Changelog = "https://github.com/agelamin17/geoai3d/blob/main/CHANGELOG.md"
+
+[tool.hatch.version]
+path = "src/geoai3d/__init__.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/geoai3d"]
+
+[tool.pytest.ini_options]
+minversion = "8.0"
+testpaths = ["tests"]
+addopts = "-ra --strict-markers --strict-config"
+markers = [
+    "gpu: requires a CUDA-capable GPU (deselect with '-m \"not gpu\"')",
+    "slow: takes more than a few seconds",
+    "network: requires network access (never used in unit tests)",
+]
+
+[tool.ruff]
+line-length = 88
+target-version = "py310"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = [
+    "E", "W",   # pycodestyle
+    "F",        # pyflakes
+    "I",        # isort
+    "N",        # pep8-naming
+    "UP",       # pyupgrade
+    "B",        # flake8-bugbear
+    "A",        # flake8-builtins
+    "C4",       # flake8-comprehensions
+    "PT",       # flake8-pytest-style
+    "SIM",      # flake8-simplify
+    "RUF",      # ruff-specific
+    "D",        # pydocstyle
+    "ANN",      # flake8-annotations
+]
+ignore = ["D203", "D213", "ANN401"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["D103", "ANN201"]
+
+[tool.mypy]
+python_version = "3.10"
+strict = true
+warn_unreachable = true
+files = ["src", "tests"]
+
+[tool.coverage.run]
+source = ["src/geoai3d"]
+branch = true
+
+[tool.coverage.report]
+show_missing = true
