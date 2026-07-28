@@ -13,9 +13,7 @@ from geoai3d import PointCloud, read_las, to_las
 
 
 def _make_cloud(crs: object = 28992) -> PointCloud:
-    xyz = np.array(
-        [[100.0, 200.0, 30.0], [101.5, 200.5, 31.25], [102.0, 201.0, 32.0]]
-    )
+    xyz = np.array([[100.0, 200.0, 30.0], [101.5, 200.5, 31.25], [102.0, 201.0, 32.0]])
     attributes: dict[str, NDArray[Any]] = {
         "intensity": np.array([10, 20, 30], dtype=np.uint16),
         "classification": np.array([2, 2, 6], dtype=np.uint8),
