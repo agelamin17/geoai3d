@@ -32,11 +32,20 @@ classifiers = [
 
 # Base install must succeed on a CPU-only machine with no compiler.
 # Anything needing CUDA or a build toolchain belongs in an optional extra.
-# NumPy is the columnar backbone of the core PointCloud; it ships CPU-only
-# wheels with no compiler for every supported Python (3.10-3.13).
-dependencies = ["numpy>=1.24"]
+# All three ship pure-Python or prebuilt CPU-only wheels (no compiler) for
+# every supported Python (3.10-3.13): NumPy is the columnar backbone of the
+# core PointCloud, laspy reads/writes LAS, and pyproj carries the CRS layer.
+dependencies = [
+    "numpy>=1.24",
+    "laspy>=2.5",
+    "pyproj>=3.6",
+]
 
 [project.optional-dependencies]
+# Reading/writing compressed LAZ needs the lazrs backend, a prebuilt Rust
+# wheel. It is platform-specific, so it is an opt-in extra rather than a base
+# dependency: `pip install geoai3d[laz]`. Uncompressed LAS needs nothing extra.
+laz = ["lazrs>=0.5"]
 dev = [
     "pytest>=8.0",
     "pytest-cov>=5.0",
@@ -94,7 +103,9 @@ select = [
     "D",        # pydocstyle
     "ANN",      # flake8-annotations
 ]
-ignore = ["D203", "D213", "ANN401"]
+# A005: our `io` subpackage intentionally uses the domain name from the
+# project's module-naming convention, even though it matches a stdlib module.
+ignore = ["D203", "D213", "ANN401", "A005"]
 
 [tool.ruff.lint.pydocstyle]
 convention = "google"
@@ -110,6 +121,12 @@ python_version = "3.12"
 strict = true
 warn_unreachable = true
 files = ["src", "tests"]
+
+# laspy does not ship a py.typed marker, so mypy cannot see its types.
+# Treat it as untyped rather than failing on the missing stubs. pyproj is typed.
+[[tool.mypy.overrides]]
+module = ["laspy.*"]
+ignore_missing_imports = true
 
 [tool.coverage.run]
 source = ["src/geoai3d"]

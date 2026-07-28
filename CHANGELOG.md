@@ -17,6 +17,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   operation appends to, capturing source, parameters, software version, and a
   UTC timestamp.
 - NumPy added as the first base runtime dependency (CPU-only, no compiler).
+- `read_las` and `to_las`: LAS/LAZ reading and writing via laspy, preserving
+  standard and user-defined per-point dimensions and round-tripping the
+  coordinate reference system. Reading a file without a CRS raises rather than
+  returning an unreferenced cloud; writing requires a CRS.
+- laspy and pyproj added as base dependencies (both CPU-only, no compiler).
+- Optional `laz` extra (`pip install geoai3d[laz]`) for compressed-LAZ support
+  via the lazrs backend.
 
 ## [0.0.1] - 2026-07-21
 
