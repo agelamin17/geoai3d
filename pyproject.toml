@@ -32,7 +32,9 @@ classifiers = [
 
 # Base install must succeed on a CPU-only machine with no compiler.
 # Anything needing CUDA or a build toolchain belongs in an optional extra.
-dependencies = []
+# NumPy is the columnar backbone of the core PointCloud; it ships CPU-only
+# wheels with no compiler for every supported Python (3.10-3.13).
+dependencies = ["numpy>=1.24"]
 
 [project.optional-dependencies]
 dev = [
@@ -101,7 +103,10 @@ convention = "google"
 "tests/*" = ["D103", "ANN201"]
 
 [tool.mypy]
-python_version = "3.10"
+# Parse against 3.12 because NumPy's stubs use the PEP 695 `type` statement
+# (3.12 syntax); a lower target makes mypy reject those stubs. Runtime support
+# for 3.10+ is still enforced by the pytest matrix and by ruff's py310 target.
+python_version = "3.12"
 strict = true
 warn_unreachable = true
 files = ["src", "tests"]

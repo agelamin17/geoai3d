@@ -8,7 +8,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
-- Nothing yet. Stage 1 work begins here.
+- `core` subpackage holding the foundational, dependency-light data structures.
+- `PointCloud`: the columnar (struct-of-arrays) in-memory representation, with
+  `float64` coordinates, per-point attribute columns, attribute-preserving
+  filtering and slicing, cheap `with_attribute`, axis-aligned `bounds`, and
+  slots for a coordinate reference system and a provenance record.
+- `Provenance` and `ProcessStep`: an ISO 19115-style lineage record that every
+  operation appends to, capturing source, parameters, software version, and a
+  UTC timestamp.
+- NumPy added as the first base runtime dependency (CPU-only, no compiler).
 
 ## [0.0.1] - 2026-07-21
 
