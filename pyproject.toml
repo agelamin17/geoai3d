@@ -40,6 +40,7 @@ dependencies = [
     "laspy>=2.5",
     "pyproj>=3.6",
     "pyarrow>=15",
+    "scipy>=1.10",
 ]
 
 [project.optional-dependencies]
@@ -123,11 +124,11 @@ strict = true
 warn_unreachable = true
 files = ["src", "tests"]
 
-# laspy and pyarrow do not ship complete py.typed markers, so mypy cannot fully
-# see their types. Treat them as untyped rather than failing on missing stubs.
-# pyproj is typed and needs no override.
+# laspy, pyarrow, and scipy do not ship complete py.typed markers, so mypy
+# cannot fully see their types. Treat them as untyped rather than failing on
+# missing stubs. pyproj is typed and needs no override.
 [[tool.mypy.overrides]]
-module = ["laspy.*", "pyarrow.*"]
+module = ["laspy.*", "pyarrow.*", "scipy.*"]
 ignore_missing_imports = true
 
 [tool.coverage.run]

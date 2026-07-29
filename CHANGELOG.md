@@ -35,6 +35,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   between ellipsoidal and orthometric (geoid-based) heights, with a clear error
   when a required geoid grid is unavailable offline.
 - pyarrow added as a base dependency (CPU-only, no compiler).
+- `build_kdtree`: a SciPy KD-tree over a cloud's coordinates (A4).
+- `subsample`: random, voxel (keep-first), and farthest-point subsampling,
+  all attribute-preserving (A6).
+- `estimate_normals` and `remove_statistical_outliers`: PCA surface normals and
+  statistical outlier removal over a KD-tree (A7).
+- `geometric_features`: eigenvalue descriptors (linearity, planarity,
+  sphericity, anisotropy, omnivariance, eigenentropy, surface variation,
+  verticality, sum of eigenvalues) at a k- or radius-neighbourhood, after
+  Weinmann et al. and Demantke et al. (B3).
+- `multiscale_features`: the same descriptors at each point's eigenentropy-
+  optimal neighbourhood size, with the chosen size as `optimal_k` (B4).
+- scipy added as a base dependency (CPU-only, no compiler).
 
 ### Deferred
 

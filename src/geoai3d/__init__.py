@@ -10,9 +10,13 @@ and the :class:`Provenance` lineage record it carries.
 from geoai3d.core.pointcloud import PointCloud
 from geoai3d.core.provenance import ProcessStep, Provenance
 from geoai3d.crs import reproject, reproject_3d
+from geoai3d.features import geometric_features, multiscale_features
+from geoai3d.geometry import estimate_normals, remove_statistical_outliers
+from geoai3d.index import build_kdtree
 from geoai3d.io.las import read_las, to_las
 from geoai3d.io.parquet import read_parquet, to_parquet
 from geoai3d.io.xyz import read_xyz, to_xyz
+from geoai3d.subsample import subsample
 
 __version__ = "0.0.1"
 
@@ -21,11 +25,17 @@ __all__ = [
     "ProcessStep",
     "Provenance",
     "__version__",
+    "build_kdtree",
+    "estimate_normals",
+    "geometric_features",
+    "multiscale_features",
     "read_las",
     "read_parquet",
     "read_xyz",
+    "remove_statistical_outliers",
     "reproject",
     "reproject_3d",
+    "subsample",
     "to_las",
     "to_parquet",
     "to_xyz",
