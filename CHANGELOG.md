@@ -24,6 +24,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - laspy and pyproj added as base dependencies (both CPU-only, no compiler).
 - Optional `laz` extra (`pip install geoai3d[laz]`) for compressed-LAZ support
   via the lazrs backend.
+- `to_parquet` / `read_parquet`: Parquet at-rest format storing every column
+  losslessly, with the CRS and provenance record in the file's schema metadata.
+- `Provenance.to_dict` / `from_dict` and `ProcessStep.to_dict` / `from_dict`
+  for JSON-serialising lineage into file metadata.
+- `read_xyz` / `to_xyz`: plain XYZ text IO, writing/reading the CRS via a
+  sibling `.prj` file since the format cannot store it inline.
+- `reproject`: horizontal reprojection between coordinate reference systems.
+- `reproject_3d`: full 3D reprojection including the vertical datum, converting
+  between ellipsoidal and orthometric (geoid-based) heights, with a clear error
+  when a required geoid grid is unavailable offline.
+- pyarrow added as a base dependency (CPU-only, no compiler).
+
+### Deferred
+
+- PLY/PCD/E57 IO and the format-conversion utility, which depend on Open3D (an
+  optional `geometry` extra, kept out of the base install) and pye57. These
+  need a live environment to validate and will land in a later increment.
 
 ## [0.0.1] - 2026-07-21
 

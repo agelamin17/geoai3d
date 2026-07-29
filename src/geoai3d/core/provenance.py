@@ -46,6 +46,37 @@ class ProcessStep:
     software: str = field(default_factory=_default_software)
     timestamp: datetime = field(default_factory=_utc_now)
 
+    def to_dict(self) -> dict[str, Any]:
+        """Return a JSON-serialisable representation of this step.
+
+        Returns:
+            A mapping with the description, parameters, software, and an ISO
+            8601 timestamp string.
+        """
+        return {
+            "description": self.description,
+            "parameters": dict(self.parameters),
+            "software": self.software,
+            "timestamp": self.timestamp.isoformat(),
+        }
+
+    @classmethod
+    def from_dict(cls, data: dict[str, Any]) -> ProcessStep:
+        """Rebuild a :class:`ProcessStep` from :meth:`to_dict` output.
+
+        Args:
+            data: A mapping as produced by :meth:`to_dict`.
+
+        Returns:
+            The reconstructed :class:`ProcessStep`.
+        """
+        return cls(
+            description=data["description"],
+            parameters=dict(data.get("parameters", {})),
+            software=data["software"],
+            timestamp=datetime.fromisoformat(data["timestamp"]),
+        )
+
 
 @dataclass
 class Provenance:
@@ -111,3 +142,28 @@ class Provenance:
             immutable and therefore safe to share.
         """
         return Provenance(source=self.source, steps=list(self.steps))
+
+    def to_dict(self) -> dict[str, Any]:
+        """Return a JSON-serialisable representation of this lineage record.
+
+        Returns:
+            A mapping with the source and a list of serialised steps, suitable
+            for storing in file metadata or a STAC item.
+        """
+        return {
+            "source": self.source,
+            "steps": [step.to_dict() for step in self.steps],
+        }
+
+    @classmethod
+    def from_dict(cls, data: dict[str, Any]) -> Provenance:
+        """Rebuild a :class:`Provenance` from :meth:`to_dict` output.
+
+        Args:
+            data: A mapping as produced by :meth:`to_dict`.
+
+        Returns:
+            The reconstructed :class:`Provenance`.
+        """
+        steps = [ProcessStep.from_dict(entry) for entry in data.get("steps", [])]
+        return cls(source=data.get("source"), steps=steps)
