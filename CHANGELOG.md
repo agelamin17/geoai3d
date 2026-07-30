@@ -47,8 +47,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `multiscale_features`: the same descriptors at each point's eigenentropy-
   optimal neighbourhood size, with the chosen size as `optimal_k` (B4).
 - scipy added as a base dependency (CPU-only, no compiler).
+- `geometric_features_tiled`: out-of-core, tile-by-tile computation of
+  fixed-radius geometric features, using a one-radius halo so that features
+  near tile boundaries are **bit-for-bit identical** to the whole-cloud result
+  (the seam contract). Neighbours are summed in global-index order to keep the
+  two paths bitwise equal (A3, A5, and the tile-seam contract).
+- `estimate_radius`: pick a feature radius from the cloud's own density so the
+  out-of-core engine has a fixed halo width without the caller guessing.
+- The per-point neighbourhood math now lives in `core._neighborhood`, shared
+  verbatim by the in-memory feature functions and the tiled engine.
 
 ### Deferred
+
+- Streaming tiles from disk (so the whole cloud never has to be resident) and
+  process-pool parallelism over tiles. The per-tile computation and the seam
+  contract are done and verified in memory; these two build directly on them.
 
 - PLY/PCD/E57 IO and the format-conversion utility, which depend on Open3D (an
   optional `geometry` extra, kept out of the base install) and pye57. These
