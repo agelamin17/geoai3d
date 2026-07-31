@@ -154,9 +154,7 @@ def _partition(
             inverse = np.asarray(inverse).reshape(-1)
             for group, (tile_i, tile_j) in enumerate(unique_pairs):
                 members = selected[inverse == group]
-                writer = _get_writer(
-                    writers, paths, temp_dir, int(tile_i), int(tile_j)
-                )
+                writer = _get_writer(writers, paths, temp_dir, int(tile_i), int(tile_j))
                 writer.write_table(
                     pa.table(
                         {
