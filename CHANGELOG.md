@@ -62,6 +62,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   computes features tile by tile and writes a GEOAI_3D Parquet. Bounded memory,
   optional multi-process parallelism, and bit-identical to the whole-cloud
   result (the seam contract, on disk).
+- `geoai3d` command-line interface (J5): `info`, `convert`, `reproject`,
+  `subsample`, `features`, and `features-stream` subcommands, choosing input
+  and output formats from the file extension.
 
 ### Deferred
 

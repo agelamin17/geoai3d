@@ -68,6 +68,9 @@ Repository = "https://github.com/agelamin17/geoai3d"
 Issues = "https://github.com/agelamin17/geoai3d/issues"
 Changelog = "https://github.com/agelamin17/geoai3d/blob/main/CHANGELOG.md"
 
+[project.scripts]
+geoai3d = "geoai3d.cli:main"
+
 [tool.hatch.version]
 path = "src/geoai3d/__init__.py"
 
