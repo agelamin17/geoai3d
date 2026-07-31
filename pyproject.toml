@@ -48,6 +48,8 @@ dependencies = [
 # wheel. It is platform-specific, so it is an opt-in extra rather than a base
 # dependency: `pip install geoai3d[laz]`. Uncompressed LAS needs nothing extra.
 laz = ["lazrs>=0.5"]
+# The interactive Jupyter/Colab viewer. plotly is pure Python (no compiler).
+viz = ["plotly>=5.0"]
 dev = [
     "pytest>=8.0",
     "pytest-cov>=5.0",
@@ -131,7 +133,7 @@ files = ["src", "tests"]
 # cannot fully see their types. Treat them as untyped rather than failing on
 # missing stubs. pyproj is typed and needs no override.
 [[tool.mypy.overrides]]
-module = ["laspy.*", "pyarrow.*", "scipy.*"]
+module = ["laspy.*", "pyarrow.*", "scipy.*", "plotly.*"]
 ignore_missing_imports = true
 
 [tool.coverage.run]

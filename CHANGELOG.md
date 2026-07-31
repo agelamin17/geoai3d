@@ -65,6 +65,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `geoai3d` command-line interface (J5): `info`, `convert`, `reproject`,
   `subsample`, `features`, and `features-stream` subcommands, choosing input
   and output formats from the file extension.
+- `view`: interactive Jupyter/Colab 3D viewer (I1, I4) via plotly, colouring
+  by height, an attribute, or true RGB, with automatic thinning for display.
+  In the optional `viz` extra (`pip install geoai3d[viz]`).
 
 ### Deferred
 
