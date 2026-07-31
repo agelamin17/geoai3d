@@ -17,6 +17,7 @@ from geoai3d.io.las import read_las, to_las
 from geoai3d.io.parquet import read_parquet, to_parquet
 from geoai3d.io.xyz import read_xyz, to_xyz
 from geoai3d.outofcore import estimate_radius, geometric_features_tiled
+from geoai3d.stream import geometric_features_stream
 from geoai3d.subsample import subsample
 
 __version__ = "0.0.1"
@@ -30,6 +31,7 @@ __all__ = [
     "estimate_normals",
     "estimate_radius",
     "geometric_features",
+    "geometric_features_stream",
     "geometric_features_tiled",
     "multiscale_features",
     "read_las",

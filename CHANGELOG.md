@@ -56,12 +56,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   out-of-core engine has a fixed halo width without the caller guessing.
 - The per-point neighbourhood math now lives in `core._neighborhood`, shared
   verbatim by the in-memory feature functions and the tiled engine.
+- `geometric_features_stream`: disk-based out-of-core features for a LAS/LAZ
+  file that does not fit in memory. Streams the file once to partition points
+  into per-tile temporary files (replicating each into neighbouring halos), then
+  computes features tile by tile and writes a GEOAI_3D Parquet. Bounded memory,
+  optional multi-process parallelism, and bit-identical to the whole-cloud
+  result (the seam contract, on disk).
 
 ### Deferred
 
-- Streaming tiles from disk (so the whole cloud never has to be resident) and
-  process-pool parallelism over tiles. The per-tile computation and the seam
-  contract are done and verified in memory; these two build directly on them.
+- COPC spatial-index reads (to skip the partition pass on already-indexed files)
+  and carrying the full set of source point attributes through the stream. The
+  streaming engine and its bit-identical seam guarantee are done; these are
+  performance and fidelity refinements on top.
 
 - PLY/PCD/E57 IO and the format-conversion utility, which depend on Open3D (an
   optional `geometry` extra, kept out of the base install) and pye57. These
