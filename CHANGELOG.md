@@ -68,6 +68,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `view`: interactive Jupyter/Colab 3D viewer (I1, I4) via plotly, colouring
   by height, an attribute, or true RGB, with automatic thinning for display.
   In the optional `viz` extra (`pip install geoai3d[viz]`).
+- `benchmarks/`: a runnable out-of-core benchmark on the public CC0 AHN dataset
+  (memory + timing) plus a streaming tile-merge helper and instructions (J6).
 
 ### Deferred
 

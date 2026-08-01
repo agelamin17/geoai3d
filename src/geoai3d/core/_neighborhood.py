@@ -113,18 +113,56 @@ def radius_eigen(
     """
     query_points = pool_xyz[query_positions]
     neighbor_lists = tree.query_ball_point(query_points, r=radius, workers=-1)
-    count = len(query_positions)
-    eigenvalues = np.full((count, 3), np.nan)
-    normals = np.full((count, 3), np.nan)
-    for output_index, local_neighbors in enumerate(neighbor_lists):
-        if len(local_neighbors) < 3:
-            continue
-        local = np.asarray(local_neighbors, dtype=np.intp)
-        order = np.argsort(pool_global[local], kind="stable")
-        points = pool_xyz[local[order]]
-        centered = points - points.mean(axis=0)
-        covariance = centered.T @ centered / len(points)
-        values, vectors = np.linalg.eigh(covariance)
-        eigenvalues[output_index] = np.clip(values[::-1], 0.0, None)
-        normals[output_index] = vectors[:, 0]
+    m = len(query_positions)
+    eigenvalues = np.full((m, 3), np.nan)
+    normals = np.full((m, 3), np.nan)
+    if m == 0:
+        return eigenvalues, normals
+
+    lengths = np.fromiter(
+        (len(neighbors) for neighbors in neighbor_lists), dtype=np.intp, count=m
+    )
+    if not lengths.any():
+        return eigenvalues, normals
+
+    # Flatten every query's neighbours into one pair list, then order each
+    # query's neighbours by global index. Summing in a fixed global order is
+    # what keeps the whole-cloud and tiled paths bit-for-bit identical.
+    flat = np.concatenate(
+        [np.asarray(neighbors, dtype=np.intp) for neighbors in neighbor_lists]
+    )
+    query_of_pair = np.repeat(np.arange(m, dtype=np.intp), lengths)
+    order = np.lexsort((pool_global[flat], query_of_pair))
+    query_of_pair = query_of_pair[order]
+    flat = flat[order]
+
+    # Assemble every point's covariance in one vectorised pass (bincount sums
+    # per query in array order, which is the global order set above).
+    counts = lengths.astype(np.float64)
+    neighbor_xyz = pool_xyz[flat]
+    mean = (
+        np.stack(
+            [
+                np.bincount(query_of_pair, weights=neighbor_xyz[:, axis], minlength=m)
+                for axis in range(3)
+            ],
+            axis=1,
+        )
+        / counts[:, None]
+    )
+    centered = neighbor_xyz - mean[query_of_pair]
+    covariance = np.zeros((m, 3, 3))
+    for a in range(3):
+        for b in range(a, 3):
+            component = np.bincount(
+                query_of_pair, weights=centered[:, a] * centered[:, b], minlength=m
+            )
+            covariance[:, a, b] = component
+            covariance[:, b, a] = component
+    covariance /= counts[:, None, None]
+
+    valid = lengths >= 3
+    values, vectors = np.linalg.eigh(covariance[valid])
+    eigenvalues[valid] = np.clip(values[:, ::-1], 0.0, None)
+    normals[valid] = vectors[:, :, 0]
     return eigenvalues, normals

@@ -25,6 +25,7 @@ from __future__ import annotations
 import json
 import shutil
 import tempfile
+import time
 from concurrent.futures import ProcessPoolExecutor
 from pathlib import Path
 from typing import TYPE_CHECKING, Any
@@ -209,6 +210,7 @@ def geometric_features_stream(
     crs: object | None = None,
     chunk_size: int = 1_000_000,
     workers: int = 1,
+    verbose: bool = False,
 ) -> None:
     """Compute fixed-radius geometric features on a LAS/LAZ file out-of-core.
 
@@ -229,6 +231,8 @@ def geometric_features_stream(
         chunk_size: Number of points read per streaming chunk in pass one.
         workers: Number of processes for the per-tile feature pass. 1 runs
             serially.
+        verbose: If true, print the time spent in the partition pass and the
+            feature pass, and the tile count.
 
     Raises:
         ValueError: If ``radius`` or ``tile_size`` is not positive,
@@ -263,9 +267,18 @@ def geometric_features_stream(
 
         temp_dir = Path(tempfile.mkdtemp(prefix="geoai3d_tiles_"))
         try:
+            partition_start = time.perf_counter()
             paths = _partition(
                 reader, temp_dir, origin_x, origin_y, tile_size, radius, chunk_size
             )
+            partition_seconds = time.perf_counter() - partition_start
+            if verbose:
+                print(
+                    f"[geoai3d] partition pass: {partition_seconds:.1f}s "
+                    f"into {len(paths)} tiles",
+                    flush=True,
+                )
+            feature_start = time.perf_counter()
             out_schema = pa.schema(
                 [
                     ("index", pa.int64()),
@@ -292,5 +305,12 @@ def geometric_features_stream(
                         _write_result(writer, out_schema, _tile_worker(item))
             finally:
                 writer.close()
+            if verbose:
+                feature_seconds = time.perf_counter() - feature_start
+                print(
+                    f"[geoai3d] feature pass: {feature_seconds:.1f}s "
+                    f"({workers} worker(s))",
+                    flush=True,
+                )
         finally:
             shutil.rmtree(temp_dir, ignore_errors=True)

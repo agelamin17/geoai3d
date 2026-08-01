@@ -1,0 +1,4 @@
+# Benchmark data and outputs (large LAZ tiles, generated Parquet) live here.
+# Never commit them — only this .gitignore is tracked, so the folder exists.
+*
+!.gitignore

@@ -93,6 +93,9 @@ markers = [
 line-length = 88
 target-version = "py310"
 src = ["src", "tests"]
+# Benchmarks are standalone scripts (print-based, extra deps like psutil), not
+# part of the package or its test suite.
+extend-exclude = ["benchmarks"]
 
 [tool.ruff.lint]
 select = [
