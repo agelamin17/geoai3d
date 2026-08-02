@@ -107,8 +107,7 @@ def normalize_intensity(
     """
     if not correct_range and not correct_incidence_angle:
         msg = (
-            "Nothing to normalise: enable correct_range and/or "
-            "correct_incidence_angle."
+            "Nothing to normalise: enable correct_range and/or correct_incidence_angle."
         )
         raise ValueError(msg)
     if intensity_attribute not in cloud.attribute_names:
