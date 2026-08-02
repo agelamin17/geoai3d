@@ -23,6 +23,13 @@ the conda-forge channel exists.
   source point dimensions to carry into the output. The default (`None`) carries
   all of them; pass a sequence of dimension names to carry only a subset and
   keep the output smaller.
+- `normalize_intensity`: radiometric normalisation of LiDAR intensity, applying
+  the range (`(R / R_ref) ** 2`) and optional incidence-angle (`1 / cos(theta)`,
+  from `nx`/`ny`/`nz` normals) corrections after Hofle & Pfeifer (2007). Takes an
+  explicit sensor position, as a single `(3,)` origin (terrestrial) or a
+  per-point `(N, 3)` trajectory (airborne/mobile), in the cloud's CRS; adds a
+  `normalized_intensity` column and records the correction in the lineage.
+  CPU-only, pure NumPy (B-series feature).
 
 ### Changed
 - **Breaking (output shape):** `geometric_features_stream` now carries every
