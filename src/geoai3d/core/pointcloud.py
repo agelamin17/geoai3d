@@ -17,7 +17,11 @@ from typing import TYPE_CHECKING, Any
 import numpy as np
 from numpy.typing import NDArray
 
+from geoai3d.core._crs import coerce_crs
+
 if TYPE_CHECKING:
+    import pyproj
+
     from geoai3d.core.provenance import Provenance
 
 
@@ -59,7 +63,18 @@ class PointCloud:
         crs: object | None = None,
         provenance: Provenance | None = None,
     ) -> None:
-        """Validate the inputs and store them in columnar form."""
+        """Validate the inputs and store them in columnar form.
+
+        The ``crs`` argument is coerced to a :class:`pyproj.CRS` so that
+        :attr:`crs` always returns a resolved reference system (or ``None``),
+        however the cloud was built.
+
+        Raises:
+            ValueError: If ``xyz`` is not ``(n_points, 3)``; if an attribute is
+                not one-dimensional or its length does not match the point
+                count; or if ``crs`` cannot be interpreted as a coordinate
+                reference system.
+        """
         coordinates: NDArray[np.float64] = np.ascontiguousarray(xyz, dtype=np.float64)
         if coordinates.ndim != 2 or coordinates.shape[1] != 3:
             msg = (
@@ -72,7 +87,7 @@ class PointCloud:
         if attributes is not None:
             for name, values in attributes.items():
                 self._set_attribute_checked(name, values)
-        self._crs = crs
+        self._crs = coerce_crs(crs) if crs is not None else None
         self._provenance = provenance
 
     def _set_attribute_checked(self, name: str, values: NDArray[Any]) -> None:
@@ -98,7 +113,7 @@ class PointCloud:
         return self._xyz
 
     @property
-    def crs(self) -> object | None:
+    def crs(self) -> pyproj.CRS | None:
         """Return the coordinate reference system, or ``None`` if unset."""
         return self._crs
 

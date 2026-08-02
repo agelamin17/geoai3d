@@ -1,6 +1,7 @@
 """Tests for the columnar PointCloud representation."""
 
 import numpy as np
+import pyproj
 import pytest
 
 from geoai3d import PointCloud, Provenance
@@ -98,10 +99,40 @@ def test_slice_selection_works() -> None:
     assert len(cloud[1:]) == 2
 
 
-def test_crs_slot_is_carried_through_filtering() -> None:
-    sentinel = object()
-    cloud = PointCloud(np.zeros((3, 3)), crs=sentinel)
-    assert cloud[np.array([True, True, False])].crs is sentinel
+def test_crs_is_carried_through_filtering() -> None:
+    cloud = PointCloud(np.zeros((3, 3)), crs=28992)
+    crs = cloud[np.array([True, True, False])].crs
+    assert isinstance(crs, pyproj.CRS)
+    assert crs.to_epsg() == 28992
+
+
+def test_crs_is_coerced_from_epsg_int() -> None:
+    # The constructor resolves any user CRS input to a pyproj.CRS, so .crs is
+    # a real reference system however the cloud was built.
+    crs = PointCloud(np.zeros((2, 3)), crs=28992).crs
+    assert isinstance(crs, pyproj.CRS)
+    assert crs.to_epsg() == 28992
+
+
+def test_crs_is_coerced_from_string() -> None:
+    crs = PointCloud(np.zeros((2, 3)), crs="EPSG:4326").crs
+    assert isinstance(crs, pyproj.CRS)
+    assert crs.to_epsg() == 4326
+
+
+def test_crs_defaults_to_none() -> None:
+    assert PointCloud(np.zeros((2, 3))).crs is None
+
+
+def test_unresolvable_crs_raises() -> None:
+    with pytest.raises(ValueError, match="coordinate reference system"):
+        PointCloud(np.zeros((2, 3)), crs="not a valid crs")
+
+
+def test_crs_survives_with_attribute() -> None:
+    crs = PointCloud(np.zeros((3, 3)), crs=28992).with_attribute("f", np.ones(3)).crs
+    assert isinstance(crs, pyproj.CRS)
+    assert crs.to_epsg() == 28992
 
 
 def test_provenance_is_copied_not_shared_on_filtering() -> None:

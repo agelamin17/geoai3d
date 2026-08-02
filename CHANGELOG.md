@@ -7,6 +7,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+This is the deliberate pre-conda-forge API-stabilisation window (targeting a
+PyPI-only `0.2.0`). Breaking changes are batched here so the churn happens before
+the conda-forge channel exists.
+
+### Added
+- `read_lidar`: a high-level reader that selects the format-specific reader from
+  the file extension (`.las`/`.laz` → `read_las`; `.xyz`/`.txt`/`.asc`/`.pts` →
+  `read_xyz`). This is now the documented entry point for loading point clouds.
+  The format-specific readers stay public as escape hatches for known formats or
+  format-specific options. Parquet is read with `read_parquet` and is
+  deliberately not routed through `read_lidar`, being the package's own at-rest
+  serialization format rather than an acquisition format.
+
+### Changed
+- **Breaking:** `PointCloud` now coerces its `crs` argument to a `pyproj.CRS` at
+  construction, so `PointCloud.crs` always returns a `pyproj.CRS` (or `None`)
+  regardless of whether an EPSG code, a WKT/PROJ string, or a `pyproj.CRS` was
+  passed. Two consequences: an unrecognisable `crs` now raises `ValueError` at
+  construction rather than being stored verbatim, and the `crs` property is now
+  typed `pyproj.CRS | None` rather than `object | None`. Code that relied on
+  `PointCloud.crs` returning the exact object it was given must adjust.
+
 ## [0.1.0] - 2026-08-01
 
 The out-of-core georeferenced foundation. Benchmark: multi-scale radius

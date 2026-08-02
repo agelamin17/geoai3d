@@ -7,12 +7,14 @@ that return and accept the package's own
 reference system through the round trip.
 """
 
+from geoai3d.io.dispatch import read_lidar
 from geoai3d.io.las import read_las, to_las
 from geoai3d.io.parquet import read_parquet, to_parquet
 from geoai3d.io.xyz import read_xyz, to_xyz
 
 __all__ = [
     "read_las",
+    "read_lidar",
     "read_parquet",
     "read_xyz",
     "to_las",
