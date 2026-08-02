@@ -27,6 +27,7 @@ from pathlib import Path
 
 import laspy
 import psutil
+import pyarrow.parquet as pq
 
 from geoai3d import geometric_features_stream
 
@@ -77,6 +78,16 @@ def main() -> None:
     parser.add_argument("--workers", type=int, default=1)
     parser.add_argument("--ceiling", type=float, default=16.0, help="Memory target (GB).")
     parser.add_argument("--verbose", action="store_true", help="Show pass timings.")
+    parser.add_argument(
+        "--crs", default=None, help="CRS to assign if the file has none (e.g. 28992)."
+    )
+    parser.add_argument(
+        "--max-points",
+        type=int,
+        default=None,
+        dest="max_points",
+        help="Process only about this many points (for a smaller-disk run).",
+    )
     args = parser.parse_args()
 
     source = Path(args.input)
@@ -102,13 +113,18 @@ def main() -> None:
             tile_size=args.tile_size,
             workers=args.workers,
             verbose=args.verbose,
+            crs=args.crs,
+            max_points=args.max_points,
         )
     elapsed = time.perf_counter() - start
 
+    processed = pq.read_metadata(str(output)).num_rows
+
     print("--- result ---")
     print(f"output:       {output.name}")
+    print(f"processed:    {processed:,} points")
     print(f"wall time:    {elapsed:.1f} s")
-    print(f"throughput:   {n_points / elapsed / 1e6:.2f} million points/s")
+    print(f"throughput:   {processed / elapsed / 1e6:.2f} million points/s")
     print(f"PEAK MEMORY:  {memory.peak_gb:.2f} GB   (ceiling: {args.ceiling:.0f} GB)")
     verdict = "PASS" if memory.peak_gb <= args.ceiling else "OVER CEILING"
     print(f"ceiling:      {verdict}")

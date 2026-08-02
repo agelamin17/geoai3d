@@ -49,6 +49,15 @@ pip install psutil                    # for accurate peak-memory sampling
 python benchmarks/benchmark.py merged.laz --radius 0.5 --tile-size 50 --workers 4 --verbose
 ```
 
+Some AHN tiles ship without a readable CRS in the header; if the run stops with
+"has no coordinate reference system", add `--crs 28992` (RD New) or `--crs 7415`
+(RD New + NAP).
+
+Disk note: features for a full ~700M-point tile are tens of GB of output plus
+~25 GB of transient temp. If disk is tight, cap the run with
+`--max-points 150000000` (still well over the 100M bar) to keep it small while
+using the file you already have.
+
 It prints the point count, wall-clock time, throughput, **peak memory** (and a
 PASS/OVER verdict against 16 GB), and with `--verbose`, the split between the
 partition pass and the (parallel) feature pass. Copy those real numbers into

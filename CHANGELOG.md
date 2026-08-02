@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.0] - 2026-08-01
+
+The out-of-core georeferenced foundation. Benchmark: multi-scale radius
+geometric features on a 722,964,406-point AHN LiDAR tile — which would need
+~21.5 GB to hold in memory, above a 16 GB budget — computed within **8.9 GB of
+peak memory** in ~29 minutes on 4 CPU cores, bit-for-bit identical to the
+whole-cloud result. Runs on a CPU-only laptop with no compiler.
+
 ### Added
 - `core` subpackage holding the foundational, dependency-light data structures.
 - `PointCloud`: the columnar (struct-of-arrays) in-memory representation, with
@@ -92,5 +100,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Linting, formatting, and strict type checking via ruff and mypy.
 - Contribution, support, governance, and AI usage documentation.
 
-[Unreleased]: https://github.com/agelamin17/geoai3d/compare/v0.0.1...HEAD
+[Unreleased]: https://github.com/agelamin17/geoai3d/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/agelamin17/geoai3d/compare/v0.0.1...v0.1.0
 [0.0.1]: https://github.com/agelamin17/geoai3d/releases/tag/v0.0.1

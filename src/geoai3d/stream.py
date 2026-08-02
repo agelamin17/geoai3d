@@ -121,6 +121,7 @@ def _partition(
     tile_size: float,
     radius: float,
     chunk_size: int,
+    max_points: int | None = None,
 ) -> dict[tuple[int, int], Path]:
     """Stream the file, writing each point to its tile and neighbouring halos."""
     writers: dict[tuple[int, int], Any] = {}
@@ -166,6 +167,8 @@ def _partition(
                         }
                     )
                 )
+        if max_points is not None and base >= max_points:
+            break
     for writer in writers.values():
         writer.close()
     return paths
@@ -211,6 +214,7 @@ def geometric_features_stream(
     chunk_size: int = 1_000_000,
     workers: int = 1,
     verbose: bool = False,
+    max_points: int | None = None,
 ) -> None:
     """Compute fixed-radius geometric features on a LAS/LAZ file out-of-core.
 
@@ -233,6 +237,8 @@ def geometric_features_stream(
             serially.
         verbose: If true, print the time spent in the partition pass and the
             feature pass, and the tile count.
+        max_points: If set, process only about this many points (rounded up to
+            a chunk). Mainly for benchmarking a slice of a very large file.
 
     Raises:
         ValueError: If ``radius`` or ``tile_size`` is not positive,
@@ -269,7 +275,14 @@ def geometric_features_stream(
         try:
             partition_start = time.perf_counter()
             paths = _partition(
-                reader, temp_dir, origin_x, origin_y, tile_size, radius, chunk_size
+                reader,
+                temp_dir,
+                origin_x,
+                origin_y,
+                tile_size,
+                radius,
+                chunk_size,
+                max_points,
             )
             partition_seconds = time.perf_counter() - partition_start
             if verbose:

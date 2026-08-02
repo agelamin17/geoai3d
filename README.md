@@ -8,10 +8,13 @@
 and Gaussian splatting, with coordinate reference systems, vertical datums, and
 accuracy reporting treated as first-class concerns rather than afterthoughts.
 
-> **Status: pre-alpha.** Version 0.0.1 is a project skeleton. It installs and does
-> nothing. Development is happening in the open from the first commit — see the
-> roadmap below for what lands when, and [CONTRIBUTING.md](CONTRIBUTING.md) if you
-> want to be involved early.
+> **Status: pre-alpha (v0.1.0).** The out-of-core georeferenced foundation is here:
+> read and write LAS/LAZ, Parquet, and XYZ with coordinate-system and vertical-datum
+> handling, geometric feature descriptors, and a streaming engine that computed
+> features on a **722,964,406-point** LiDAR tile — which would need ~21.5 GB to hold
+> in memory — within **8.9 GB of peak memory** on 4 CPU cores, bit-for-bit identical
+> to the whole-cloud result. APIs may still change before 1.0. See the roadmap below
+> and [CONTRIBUTING.md](CONTRIBUTING.md) if you want to be involved early.
 
 ## Why this exists
 
