@@ -66,28 +66,38 @@ These are constraints on the project, not aspirations:
 pip install geoai3d
 ```
 
-Not yet published. Until the first release, install from source:
+Requires Python 3.10 or newer. The base install is CPU-only and needs no compiler.
+
+Optional extras:
+
+```bash
+pip install "geoai3d[laz]"        # read/write compressed LAZ (lazrs backend)
+pip install "geoai3d[viz]"        # interactive 3D viewer for Jupyter/Colab (plotly)
+pip install "geoai3d[laz,viz]"    # both
+```
+
+From source, for development:
 
 ```bash
 git clone https://github.com/agelamin17/geoai3d.git
 cd geoai3d
-pip install -e ".[dev]"
+pip install -e ".[dev,laz,viz]"
 ```
 
 ## Roadmap
 
 Development is staged. Each stage ships something installable and useful on its own.
 
-| Stage | Focus | Deliverable |
-|---|---|---|
-| 0 | Project skeleton, CI, open development from day one | `v0.0.1` *(current)* |
-| 1 | Out-of-core IO, spatial indexing, CRS and vertical datums, multi-scale geometric features, provenance | `v0.1.0` on PyPI |
-| 2 | Frugal segmentation, classical classification, GIS vector export | `v0.3.0` on PyPI and conda-forge |
-| 3 | QGIS plugin, tutorial notebooks, tree segmentation, change detection | Plugin in the QGIS repository |
-| 4 | Consolidation and documentation | Peer-reviewed software paper |
-| 5 | Supervised segmentation and detection, pretrained geospatial models | `v1.0.0` and model zoo |
-| 6 | Metric georeferenced Gaussian splatting validated against survey control | Methods paper |
-| 7 | Annotation and labelling workflows | To be determined |
+| Stage | Focus | Deliverable | Status |
+|---|---|---|---|
+| 0 | Project skeleton, CI, open development from day one | `v0.0.1` | ✅ Shipped |
+| 1 | Out-of-core IO, spatial indexing, CRS and vertical datums, multi-scale geometric features, provenance | `v0.1.0` on PyPI | ✅ Shipped |
+| 2 | Frugal segmentation, classical classification, GIS vector export | `v0.3.0` on PyPI and conda-forge | ⏭ Next |
+| 3 | QGIS plugin, tutorial notebooks, tree segmentation, change detection | Plugin in the QGIS repository | Planned |
+| 4 | Consolidation and documentation | Peer-reviewed software paper | Planned |
+| 5 | Supervised segmentation and detection, pretrained geospatial models | `v1.0.0` and model zoo | Planned |
+| 6 | Metric georeferenced Gaussian splatting validated against survey control | Methods paper | Planned |
+| 7 | Annotation and labelling workflows | To be determined | Planned |
 
 ## Non-goals
 
