@@ -19,8 +19,20 @@ the conda-forge channel exists.
   format-specific options. Parquet is read with `read_parquet` and is
   deliberately not routed through `read_lidar`, being the package's own at-rest
   serialization format rather than an acquisition format.
+- `geometric_features_stream` gained an `attributes` parameter selecting which
+  source point dimensions to carry into the output. The default (`None`) carries
+  all of them; pass a sequence of dimension names to carry only a subset and
+  keep the output smaller.
 
 ### Changed
+- **Breaking (output shape):** `geometric_features_stream` now carries every
+  source point attribute (intensity, returns, classification, GPS time, extra
+  dimensions, and so on) through to its Parquet output, each with its original
+  dtype, alongside the existing `index`, coordinate, and feature columns.
+  Previously the streamed output dropped source attributes. This resolves the
+  attribute carry-through item deferred from 0.1.0. Code that assumed a fixed
+  streamed schema (index, x/y/z, and features only) must adjust; pass
+  `attributes=[...]` to restrict the carried set.
 - **Breaking:** `PointCloud` now coerces its `crs` argument to a `pyproj.CRS` at
   construction, so `PointCloud.crs` always returns a `pyproj.CRS` (or `None`)
   regardless of whether an EPSG code, a WKT/PROJ string, or a `pyproj.CRS` was
