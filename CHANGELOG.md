@@ -23,6 +23,14 @@ the conda-forge channel exists.
   source point dimensions to carry into the output. The default (`None`) carries
   all of them; pass a sequence of dimension names to carry only a subset and
   keep the output smaller.
+- `evaluate` and `confusion_matrix` with an `AccuracyReport`: classification
+  accuracy assessment (C9) -- confusion matrix, overall accuracy, and per-class
+  precision, recall, F1, and IoU, plus mean IoU and macro F1. Pure NumPy.
+- `spatial_block_split`: spatially-blocked cross-validation, grouping points into
+  square blocks and dealing whole blocks into folds so test points never
+  neighbour their own training points -- avoiding the inflated accuracy that
+  random splits give on spatially autocorrelated data. Returns scikit-learn-style
+  `(train, test)` index pairs.
 - `feature_matrix`, `train_classifier`, `classify`, and a `Classifier` wrapper:
   classical point-wise semantic classification with a scikit-learn random forest
   on per-point features (C1, C2). `feature_matrix` assembles a matrix from named

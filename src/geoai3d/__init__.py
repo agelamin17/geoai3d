@@ -19,6 +19,7 @@ from geoai3d.cluster import connected_components, dbscan, region_growing
 from geoai3d.core.pointcloud import PointCloud
 from geoai3d.core.provenance import ProcessStep, Provenance
 from geoai3d.core.raster import Raster
+from geoai3d.crossval import spatial_block_split
 from geoai3d.crs import reproject, reproject_3d
 from geoai3d.dem import difference, to_dsm, to_dtm, volume
 from geoai3d.features import geometric_features, multiscale_features
@@ -31,6 +32,7 @@ from geoai3d.io.geotiff import read_geotiff, to_geotiff
 from geoai3d.io.las import read_las, to_las
 from geoai3d.io.parquet import read_parquet, to_parquet
 from geoai3d.io.xyz import read_xyz, to_xyz
+from geoai3d.metrics import AccuracyReport, confusion_matrix, evaluate
 from geoai3d.outofcore import estimate_radius, geometric_features_tiled
 from geoai3d.primitives import Plane, fit_plane
 from geoai3d.segment import segment
@@ -41,6 +43,7 @@ from geoai3d.viz import view
 __version__ = "0.1.0"
 
 __all__ = [
+    "AccuracyReport",
     "Classifier",
     "Plane",
     "PointCloud",
@@ -50,11 +53,13 @@ __all__ = [
     "__version__",
     "build_kdtree",
     "classify",
+    "confusion_matrix",
     "connected_components",
     "dbscan",
     "difference",
     "estimate_normals",
     "estimate_radius",
+    "evaluate",
     "feature_matrix",
     "fit_plane",
     "geometric_features",
@@ -75,6 +80,7 @@ __all__ = [
     "reproject_3d",
     "save_classifier",
     "segment",
+    "spatial_block_split",
     "subsample",
     "to_dsm",
     "to_dtm",
