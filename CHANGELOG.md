@@ -23,6 +23,11 @@ the conda-forge channel exists.
   source point dimensions to carry into the output. The default (`None`) carries
   all of them; pass a sequence of dimension names to carry only a subset and
   keep the output smaller.
+- `to_geopackage`: export a point cloud to a GeoPackage vector layer (G5) via
+  geopandas/pyogrio -- 3D `PointZ` geometry, chosen attributes as columns, the
+  CRS written into the file, and the provenance record to a
+  `<path>.provenance.json` sidecar. The geospatial deliverable a GIS analyst can
+  open directly. geopandas, pyogrio, and shapely join the `[gis]` extra.
 - `evaluate` and `confusion_matrix` with an `AccuracyReport`: classification
   accuracy assessment (C9) -- confusion matrix, overall accuracy, and per-class
   precision, recall, F1, and IoU, plus mean IoU and macro F1. Pure NumPy.

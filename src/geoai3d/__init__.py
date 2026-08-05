@@ -31,6 +31,7 @@ from geoai3d.io.dispatch import read_lidar
 from geoai3d.io.geotiff import read_geotiff, to_geotiff
 from geoai3d.io.las import read_las, to_las
 from geoai3d.io.parquet import read_parquet, to_parquet
+from geoai3d.io.vector import to_geopackage
 from geoai3d.io.xyz import read_xyz, to_xyz
 from geoai3d.metrics import AccuracyReport, confusion_matrix, evaluate
 from geoai3d.outofcore import estimate_radius, geometric_features_tiled
@@ -84,6 +85,7 @@ __all__ = [
     "subsample",
     "to_dsm",
     "to_dtm",
+    "to_geopackage",
     "to_geotiff",
     "to_las",
     "to_parquet",
