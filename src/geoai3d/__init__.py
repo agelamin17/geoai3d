@@ -12,6 +12,7 @@ from geoai3d.core.provenance import ProcessStep, Provenance
 from geoai3d.crs import reproject, reproject_3d
 from geoai3d.features import geometric_features, multiscale_features
 from geoai3d.geometry import estimate_normals, remove_statistical_outliers
+from geoai3d.ground import ground
 from geoai3d.index import build_kdtree
 from geoai3d.intensity import normalize_intensity
 from geoai3d.io.dispatch import read_lidar
@@ -36,6 +37,7 @@ __all__ = [
     "geometric_features",
     "geometric_features_stream",
     "geometric_features_tiled",
+    "ground",
     "multiscale_features",
     "normalize_intensity",
     "read_las",

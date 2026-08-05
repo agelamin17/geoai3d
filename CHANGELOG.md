@@ -23,6 +23,12 @@ the conda-forge channel exists.
   source point dimensions to carry into the output. The default (`None`) carries
   all of them; pass a sequence of dimension names to carry only a subset and
   keep the output smaller.
+- `ground`: training-free ground filtering by cloth simulation (CSF, after
+  Zhang et al. 2016), adding a boolean `is_ground` column. A pure-NumPy default
+  backend (memory scales with the cloth grid, not the point count; no compiler)
+  and an optional `backend="pdal"` delegating to PDAL's `filters.csf` for users
+  who have PDAL installed. Assumes an airborne 2.5-D scene; terrestrial scans
+  with walls or overhangs are a first pass (B7).
 - `normalize_intensity`: radiometric normalisation of LiDAR intensity, applying
   the range (`(R / R_ref) ** 2`) and optional incidence-angle (`1 / cos(theta)`,
   from `nx`/`ny`/`nz` normals) corrections after Hofle & Pfeifer (2007). Takes an

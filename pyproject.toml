@@ -79,6 +79,11 @@ path = "src/geoai3d/__init__.py"
 [tool.hatch.build.targets.wheel]
 packages = ["src/geoai3d"]
 
+[tool.hatch.build.targets.sdist]
+# Never pack benchmark data (multi-GB LAZ tiles and generated Parquet) into the
+# source distribution. Only the benchmark scripts belong in the release.
+exclude = ["/benchmarks/data"]
+
 [tool.pytest.ini_options]
 minversion = "8.0"
 testpaths = ["tests"]
@@ -136,7 +141,7 @@ files = ["src", "tests"]
 # cannot fully see their types. Treat them as untyped rather than failing on
 # missing stubs. pyproj is typed and needs no override.
 [[tool.mypy.overrides]]
-module = ["laspy.*", "pyarrow.*", "scipy.*", "plotly.*"]
+module = ["laspy.*", "pyarrow.*", "scipy.*", "plotly.*", "pdal.*"]
 ignore_missing_imports = true
 
 [tool.coverage.run]
