@@ -23,6 +23,18 @@ the conda-forge channel exists.
   source point dimensions to carry into the output. The default (`None`) carries
   all of them; pass a sequence of dimension names to carry only a subset and
   keep the output smaller.
+- `Raster`: a georeferenced 2D grid (values plus an affine transform, CRS, and
+  nodata), the raster counterpart to `PointCloud`, keeping the CRS attached
+  through every operation.
+- `to_dtm` / `to_dsm`: rasterise a cloud to a Digital Terrain Model (bare earth,
+  using a ground attribute when present) or Digital Surface Model (top surface),
+  gridded on the shared cloud extent so the two align. `difference` subtracts two
+  aligned rasters (DSM minus DTM for object heights, or two epochs for change),
+  and `volume` integrates a height raster into cut, fill, and net volumes (G7).
+  The raster maths is pure NumPy in the base install.
+- `read_geotiff` / `to_geotiff`: GeoTIFF IO for rasters via rasterio, in the new
+  optional `[gis]` extra (`pip install geoai3d[gis]`); the array maths needs no
+  extra.
 - `ground`: training-free ground filtering by cloth simulation (CSF, after
   Zhang et al. 2016), adding a boolean `is_ground` column. A pure-NumPy default
   backend (memory scales with the cloth grid, not the point count; no compiler)
