@@ -23,6 +23,10 @@ the conda-forge channel exists.
   source point dimensions to carry into the output. The default (`None`) carries
   all of them; pass a sequence of dimension names to carry only a subset and
   keep the output smaller.
+- `segment`: one-call unsupervised full-scene decomposition (B6), chaining
+  ground filtering, surface normals and geometric features, and region growing
+  into a single `segment` label per point (ground `0`, each object `1+`,
+  unassigned `-1`). No labels, no training, no GPU -- the frugal laptop workflow.
 - `dbscan`: density-based clustering (via scikit-learn), adding an integer
   `cluster` column with `-1` for unclustered points (B5).
 - `region_growing`: normal-based unsupervised segmentation (after Rabbani et al.)

@@ -25,6 +25,7 @@ from geoai3d.io.parquet import read_parquet, to_parquet
 from geoai3d.io.xyz import read_xyz, to_xyz
 from geoai3d.outofcore import estimate_radius, geometric_features_tiled
 from geoai3d.primitives import Plane, fit_plane
+from geoai3d.segment import segment
 from geoai3d.stream import geometric_features_stream
 from geoai3d.subsample import subsample
 from geoai3d.viz import view
@@ -60,6 +61,7 @@ __all__ = [
     "remove_statistical_outliers",
     "reproject",
     "reproject_3d",
+    "segment",
     "subsample",
     "to_dsm",
     "to_dtm",
