@@ -7,6 +7,7 @@ The first building blocks are the columnar :class:`PointCloud` representation
 and the :class:`Provenance` lineage record it carries.
 """
 
+from geoai3d.cluster import connected_components
 from geoai3d.core.pointcloud import PointCloud
 from geoai3d.core.provenance import ProcessStep, Provenance
 from geoai3d.core.raster import Raster
@@ -23,6 +24,7 @@ from geoai3d.io.las import read_las, to_las
 from geoai3d.io.parquet import read_parquet, to_parquet
 from geoai3d.io.xyz import read_xyz, to_xyz
 from geoai3d.outofcore import estimate_radius, geometric_features_tiled
+from geoai3d.primitives import Plane, fit_plane
 from geoai3d.stream import geometric_features_stream
 from geoai3d.subsample import subsample
 from geoai3d.viz import view
@@ -30,15 +32,18 @@ from geoai3d.viz import view
 __version__ = "0.1.0"
 
 __all__ = [
+    "Plane",
     "PointCloud",
     "ProcessStep",
     "Provenance",
     "Raster",
     "__version__",
     "build_kdtree",
+    "connected_components",
     "difference",
     "estimate_normals",
     "estimate_radius",
+    "fit_plane",
     "geometric_features",
     "geometric_features_stream",
     "geometric_features_tiled",

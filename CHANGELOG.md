@@ -23,6 +23,13 @@ the conda-forge channel exists.
   source point dimensions to carry into the output. The default (`None`) carries
   all of them; pass a sequence of dimension names to carry only a subset and
   keep the output smaller.
+- `fit_plane`: RANSAC plane fitting, returning a `Plane` (unit normal, offset,
+  inlier mask, `signed_distance`) refit to its inliers by least squares. The
+  workhorse primitive for ground, walls, and roof facets, and a robust
+  dominant-plane fallback for terrestrial scans (B1). Pure NumPy.
+- `connected_components`: connectivity-based instance labelling, adding an integer
+  `component` column (contiguous ids, `-1` for groups below `min_size`) via a
+  KD-tree distance graph and SciPy sparse components (B8).
 - `Raster`: a georeferenced 2D grid (values plus an affine transform, CRS, and
   nodata), the raster counterpart to `PointCloud`, keeping the CRS attached
   through every operation.
