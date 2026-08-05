@@ -23,6 +23,13 @@ the conda-forge channel exists.
   source point dimensions to carry into the output. The default (`None`) carries
   all of them; pass a sequence of dimension names to carry only a subset and
   keep the output smaller.
+- `feature_matrix`, `train_classifier`, `classify`, and a `Classifier` wrapper:
+  classical point-wise semantic classification with a scikit-learn random forest
+  on per-point features (C1, C2). `feature_matrix` assembles a matrix from named
+  attributes (defaulting to the geometric features and normalised intensity
+  present); `train_classifier` fits a forest on a labelled cloud; `classify`
+  applies it, adding a `prediction` column. `save_classifier`/`load_classifier`
+  persist a trained model (pickle). A fast CPU-only baseline, no GPU.
 - `segment`: one-call unsupervised full-scene decomposition (B6), chaining
   ground filtering, surface normals and geometric features, and region growing
   into a single `segment` label per point (ground `0`, each object `1+`,
