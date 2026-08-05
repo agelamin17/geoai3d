@@ -7,7 +7,7 @@ The first building blocks are the columnar :class:`PointCloud` representation
 and the :class:`Provenance` lineage record it carries.
 """
 
-from geoai3d.cluster import connected_components
+from geoai3d.cluster import connected_components, dbscan, region_growing
 from geoai3d.core.pointcloud import PointCloud
 from geoai3d.core.provenance import ProcessStep, Provenance
 from geoai3d.core.raster import Raster
@@ -40,6 +40,7 @@ __all__ = [
     "__version__",
     "build_kdtree",
     "connected_components",
+    "dbscan",
     "difference",
     "estimate_normals",
     "estimate_radius",
@@ -55,6 +56,7 @@ __all__ = [
     "read_lidar",
     "read_parquet",
     "read_xyz",
+    "region_growing",
     "remove_statistical_outliers",
     "reproject",
     "reproject_3d",

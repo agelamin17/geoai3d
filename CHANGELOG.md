@@ -23,6 +23,14 @@ the conda-forge channel exists.
   source point dimensions to carry into the output. The default (`None`) carries
   all of them; pass a sequence of dimension names to carry only a subset and
   keep the output smaller.
+- `dbscan`: density-based clustering (via scikit-learn), adding an integer
+  `cluster` column with `-1` for unclustered points (B5).
+- `region_growing`: normal-based unsupervised segmentation (after Rabbani et al.)
+  growing smooth regions from seeds and adding an integer `segment` column,
+  splitting a scene by surface orientation with no training data (B2). Needs
+  surface normals from `estimate_normals`.
+- scikit-learn added as a base dependency (CPU-only prebuilt wheels, no
+  compiler), powering `dbscan` and the classical classifiers to come.
 - `fit_plane`: RANSAC plane fitting, returning a `Plane` (unit normal, offset,
   inlier mask, `signed_distance`) refit to its inliers by least squares. The
   workhorse primitive for ground, walls, and roof facets, and a robust
