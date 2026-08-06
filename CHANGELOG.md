@@ -7,9 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-This is the deliberate pre-conda-forge API-stabilisation window (targeting a
-PyPI-only `0.2.0`). Breaking changes are batched here so the churn happens before
-the conda-forge channel exists.
+## [0.2.0] - 2026-08-06
+
+Stage 2: frugal segmentation, classical classification, and GIS output. This is
+the deliberate breaking revision, released to PyPI before the conda-forge channel
+opens so the API churn lands first (see **Changed**). The 0.3.0 release will add
+conda-forge distribution.
 
 ### Added
 - `read_lidar`: a high-level reader that selects the format-specific reader from
@@ -208,6 +211,7 @@ whole-cloud result. Runs on a CPU-only laptop with no compiler.
 - Linting, formatting, and strict type checking via ruff and mypy.
 - Contribution, support, governance, and AI usage documentation.
 
-[Unreleased]: https://github.com/agelamin17/geoai3d/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/agelamin17/geoai3d/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/agelamin17/geoai3d/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/agelamin17/geoai3d/compare/v0.0.1...v0.1.0
 [0.0.1]: https://github.com/agelamin17/geoai3d/releases/tag/v0.0.1

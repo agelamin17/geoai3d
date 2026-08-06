@@ -1,0 +1,69 @@
+{% set name = "geoai3d" %}
+{% set version = "0.3.0" %}
+
+# Recipe for conda-forge. Copy this file to
+# recipes/geoai3d/meta.yaml in a fork of conda-forge/staged-recipes and open a
+# pull request. Fill in the sha256 below from the PyPI sdist of the release
+# (see RELEASING.md). geoai3d is pure Python, so the package is noarch.
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 0000000000000000000000000000000000000000000000000000000000000000
+
+build:
+  noarch: python
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  entry_points:
+    - geoai3d = geoai3d.cli:main
+
+requirements:
+  host:
+    - python >=3.10
+    - pip
+    - hatchling >=1.27
+  run:
+    - python >=3.10
+    - numpy >=1.24
+    - laspy >=2.5
+    - pyproj >=3.6
+    - pyarrow >=15
+    - scipy >=1.10
+    - scikit-learn >=1.3
+
+test:
+  imports:
+    - geoai3d
+  requires:
+    - pip
+  commands:
+    - pip check
+    - geoai3d --help
+
+about:
+  home: https://github.com/agelamin17/geoai3d
+  license: MIT
+  license_family: MIT
+  license_file: LICENSE
+  summary: Geospatial-first AI workflows for 3D data
+  description: |
+    GEOAI_3D brings high-level, geospatial-first AI workflows to 3D data.
+    Coordinate reference systems, vertical datums, provenance, and GIS export
+    are first-class: every point cloud and every output carries a CRS and a
+    lineage record. It reads and writes LAS/LAZ, Parquet, and XYZ; computes
+    out-of-core geometric features with a tested tile-seam guarantee; filters
+    ground and builds DTM/DSM rasters and volumes; segments scenes without
+    labels; classifies points with a random forest evaluated by
+    spatially-blocked cross-validation; and exports GeoTIFF and GeoPackage
+    layers. The base install is CPU-only and needs no compiler; optional
+    extras add compressed-LAZ, the 3D viewer, and GDAL-backed GIS IO.
+  doc_url: https://agelamin17.github.io/geoai3d/
+  dev_url: https://github.com/agelamin17/geoai3d
+
+extra:
+  recipe-maintainers:
+    - agelamin17
