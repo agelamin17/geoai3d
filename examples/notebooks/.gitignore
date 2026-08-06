@@ -1,0 +1,7 @@
+# Artifacts produced by running the notebooks (regenerate any time).
+*.parquet
+*.tif
+*.gpkg
+*.gpkg.provenance.json
+.ipynb_checkpoints/
+.writetest

@@ -23,6 +23,11 @@ the conda-forge channel exists.
   source point dimensions to carry into the output. The default (`None`) carries
   all of them; pass a sequence of dimension names to carry only a subset and
   keep the output smaller.
+- Four tutorial notebooks in `examples/notebooks/`, running the Stage-2 workflow
+  end to end on a small real AHN LiDAR sample (CC0, in `examples/data/`): getting
+  started (IO, CRS, features), terrain products (ground, DTM/DSM, differencing,
+  volume), unsupervised segmentation, and supervised classification with
+  spatially-blocked cross-validation and GeoPackage export.
 - `to_geopackage`: export a point cloud to a GeoPackage vector layer (G5) via
   geopandas/pyogrio -- 3D `PointZ` geometry, chosen attributes as columns, the
   CRS written into the file, and the provenance record to a
