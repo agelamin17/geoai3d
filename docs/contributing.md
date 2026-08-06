@@ -102,7 +102,8 @@ If you are unsure, open an issue before writing the code.
 
 Using AI tools to help write contributions is fine. Disclose it in the pull request
 description — which tools, and for what. You remain responsible for correctness,
-originality, and licensing of anything you submit. See [AI_USAGE.md](AI_USAGE.md).
+originality, and licensing of anything you submit. See
+[AI_USAGE.md](https://github.com/agelamin17/geoai3d/blob/main/AI_USAGE.md).
 
 ## Pull requests
 
@@ -111,4 +112,5 @@ Keep them focused. Reference an issue where one exists. Update the CHANGELOG und
 
 ## Code of conduct
 
-Participation is governed by [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md).
+Participation is governed by
+[CODE_OF_CONDUCT.md](https://github.com/agelamin17/geoai3d/blob/main/CODE_OF_CONDUCT.md).

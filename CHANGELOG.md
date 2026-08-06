@@ -23,6 +23,11 @@ the conda-forge channel exists.
   source point dimensions to carry into the output. The default (`None`) carries
   all of them; pass a sequence of dimension names to carry only a subset and
   keep the output smaller.
+- Documentation site (MkDocs Material): a rewritten landing page, a
+  getting-started guide with the frugal and supervised workflows, a tutorials
+  page linking the notebooks, and an auto-generated API reference (mkdocstrings)
+  built from the docstrings. Build locally with
+  `pip install -e ".[docs]" && mkdocs serve`.
 - Four tutorial notebooks in `examples/notebooks/`, running the Stage-2 workflow
   end to end on a small real AHN LiDAR sample (CC0, in `examples/data/`): getting
   started (IO, CRS, features), terrain products (ground, DTM/DSM, differencing,
